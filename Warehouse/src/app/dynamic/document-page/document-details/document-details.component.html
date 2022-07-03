@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-4 my-2">
+    <p>Transaction Type: {{ document.transactionType }}</p>
+    <p>Date of Creation: {{ document.dateOfCreation | date }}</p>
+    <p *ngIf="document.dateOfRecording != ''">
+      Date of Recording: {{ document.dateOfRecording | date }}
+    </p>
+  </div>
+  <div class="col-4 my-2">
+    Buisness Parther: {{ document.businessPartner.name }},
+    {{ document.businessPartner.city }}, {{ document.businessPartner.address }}
+  </div>
+  <div class="col-4 my-2">
+    Status: {{ document.status }} <br />
+    <button
+      class="btn btn-primary"
+      *ngIf="document.dateOfRecording == ''"
+      (click)="record()"
+    >
+      Record Document
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Document items</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>Article</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doc of documentsList.results">
+          <td scope="row">{{ articleToName(doc.article) }}</td>
+          <td>{{ doc.price }}</td>
+          <td>{{ doc.quantity }}</td>
+          <td>{{ doc.price * doc.quantity }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="document.dateOfRecording == ''" class="col-4">
+    <app-document-articles
+      [listOfArticles]="listOfArticles"
+      (itemAdded)="addArticle($event)"
+    ></app-document-articles>
+  </div>
+</div>

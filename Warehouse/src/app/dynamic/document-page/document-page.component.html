@@ -1,0 +1,180 @@
+<div class="row">
+  <div class="col-2 my-3">
+    <ngb-pagination
+      [collectionSize]="documentList.count"
+      [pageSize]="params.pageSize"
+      [page]="params.page"
+      (pageChange)="onChangePage($event)"
+    ></ngb-pagination>
+  </div>
+
+  <!-- CHECKBOXKOVI -->
+  <div class="col-8 my-3">
+    <div class="my-2 d-flex justify-content-around" *ngIf="showParagraph">
+      <small>
+        <label class="mx-1">Date of Creation</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="docInput"
+          [(ngModel)]="tableShow.dateOfCreation"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Date of Recording</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="dorInput"
+          [(ngModel)]="tableShow.dateOfRecording"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Status</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="statusInput"
+          [(ngModel)]="tableShow.status"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Transaction Type</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="transactionInput"
+          [(ngModel)]="tableShow.transactionType"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Business Partner Name</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="partnerNameInput"
+          [(ngModel)]="tableShow.businessPartner"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Business Partner Location</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="partnerLocationInput"
+          [(ngModel)]="tableShow.businessPartnerLocation"
+        />
+      </small>
+      <small>
+        <label class="mx-1">Year</label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked
+          name="year"
+          [(ngModel)]="tableShow.year"
+        />
+      </small>
+    </div>
+  </div>
+  <div class="col-2 my-3">
+    <button
+      *ngIf="!showParagraph"
+      class="btn btn-primary"
+      (click)="parOpenClose()"
+    >
+      Open Table settings
+    </button>
+    <button
+      *ngIf="showParagraph"
+      class="btn btn-light"
+      (click)="parOpenClose()"
+    >
+      Close Table settings
+    </button>
+  </div>
+</div>
+
+<!-- //TABELA -->
+<div class="row">
+  <div class="col">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th *ngIf="tableShow.dateOfCreation" scope="col" class="text-primary">
+            Date of Creation
+            <fa-icon
+              [icon]="faCoffee"
+              (click)="changeSortBy('dateOfCreation')"
+            ></fa-icon>
+          </th>
+          <th
+            *ngIf="tableShow.dateOfRecording"
+            scope="col"
+            class="text-primary"
+          >
+            Date of Recording
+            <fa-icon
+              [icon]="faCoffee"
+              (click)="changeSortBy('dateOfRecording')"
+            ></fa-icon>
+          </th>
+          <th *ngIf="tableShow.status" scope="col" class="text-primary">
+            Status
+            <fa-icon
+              [icon]="faCoffee"
+              (click)="changeSortBy('status')"
+            ></fa-icon>
+          </th>
+          <th
+            *ngIf="tableShow.transactionType"
+            scope="col"
+            class="text-primary"
+            (click)="changeSortBy('transactionType')"
+          >
+            Transaction Type
+            <fa-icon
+              [icon]="faCoffee"
+              (click)="changeSortBy('status')"
+            ></fa-icon>
+          </th>
+          <th *ngIf="tableShow.businessPartner" scope="col">
+            Business Partner Name
+          </th>
+          <th *ngIf="tableShow.businessPartnerLocation" scope="col">
+            Business Partner Location
+          </th>
+          <th *ngIf="tableShow.year" scope="col">Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          (click)="opetDetails(doc._id)"
+          *ngFor="let doc of documentList.results"
+        >
+          <td *ngIf="tableShow.dateOfCreation">
+            {{ doc.dateOfCreation | date }}
+          </td>
+          <td *ngIf="tableShow.dateOfRecording">
+            {{ doc.dateOfRecording | date }}
+          </td>
+          <td *ngIf="tableShow.status">{{ doc.status }}</td>
+          <td *ngIf="tableShow.transactionType">{{ doc.transactionType }}</td>
+          <td *ngIf="tableShow.businessPartner">
+            {{ doc.businessPartner.name }}
+          </td>
+          <td *ngIf="tableShow.businessPartnerLocation">
+            {{ doc.businessPartner.city }}, {{ doc.businessPartner.address }}
+          </td>
+          <td *ngIf="tableShow.year">{{ doc.year }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

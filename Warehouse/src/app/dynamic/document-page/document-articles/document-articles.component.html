@@ -1,0 +1,43 @@
+<form>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Article</label>
+    <select
+      class="form-select"
+      aria-label="Default select example"
+      name="selectInput"
+      [(ngModel)]="newItem.article"
+    >
+      <option selected>Open this select menu</option>
+      <option *ngFor="let art of listOfArticles" value="{{ art.code }}">
+        {{ art.name }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="exampleFormControlTextarea1"
+      name="priceInput"
+      [(ngModel)]="newItem.price"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Quantity</label>
+    <input
+      type="number"
+      class="form-control"
+      id="exampleFormControlTextarea1"
+      name="quantityInput"
+      [(ngModel)]="newItem.quantity"
+    />
+  </div>
+  {{ newItem | json }}
+  <input
+    type="submit"
+    (click)="saveItem()"
+    value="Submit"
+    class="btn btn-primary"
+  />
+</form>
